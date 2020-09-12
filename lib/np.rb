@@ -1,4 +1,6 @@
-require "np/version"
+# frozen_string_literal: true
+
+require 'np/version'
 
 module Np
   class Error < StandardError; end
