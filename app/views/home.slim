@@ -1,0 +1,19 @@
+javascript:
+  document.addEventListener('DOMContentLoaded', () => {
+    app = new App(document.querySelector('form'));
+  })
+
+
+form
+  label
+    | Pattern
+    textarea name="pattern" rows="5" cols="40"
+      | (send _receiver ${:foo :bar :baz} $...)
+
+  label
+    | Ruby Code
+    textarea name="ruby" rows="3" cols="40"
+
+#ruby_ast
+
+#pattern_code

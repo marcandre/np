@@ -9,3 +9,10 @@
 
 # rspec failure tracking
 .rspec_status
+
+# npm/yarn
+/node_modules
+
+# parcel
+/app/.cache
+/app/dist

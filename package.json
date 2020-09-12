@@ -1,0 +1,13 @@
+{
+  "name": "np",
+  "version": "0.0.1",
+  "description": "Ruby NodePattern Debugger",
+  "main": "index.js",
+  "repository": "https://github.com/marcandre/np",
+  "author": "Marc-Andre Lafortune",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "codemirror": "^5.57.0"
+  }
+}
