@@ -1,0 +1,17 @@
+@import 'codemirror/lib/codemirror.css';
+
+[data-match=not-matched] {
+  color: red;
+}
+
+[data-match=matched] {
+  color: green;
+}
+
+[data-match=not-visited] {
+  color: yellow;
+}
+
+[data-match=not-visitable] {
+  color: gray;
+}

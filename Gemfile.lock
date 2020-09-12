@@ -1,0 +1,101 @@
+PATH
+  remote: .
+  specs:
+    np (0.1.0)
+      rubocop-ast
+      sinatra
+      sinatra-contrib
+      slim
+
+PATH
+  remote: /Users/work/rubocop-ast
+  specs:
+    rubocop-ast (0.4.0)
+      parser (>= 2.7.1.4)
+      strscan (>= 1.0.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ast (2.4.1)
+    diff-lcs (1.4.4)
+    ffi (1.12.2)
+    listen (3.1.5)
+      rb-fsevent (~> 0.9, >= 0.9.4)
+      rb-inotify (~> 0.9, >= 0.9.7)
+      ruby_dep (~> 1.2)
+    multi_json (1.15.0)
+    mustermann (1.1.1)
+      ruby2_keywords (~> 0.0.1)
+    parallel (1.19.2)
+    parser (2.7.1.4)
+      ast (~> 2.4.1)
+    rack (2.2.3)
+    rack-protection (2.1.0)
+      rack
+    rainbow (3.0.0)
+    rake (12.3.3)
+    rb-fsevent (0.10.4)
+    rb-inotify (0.10.1)
+      ffi (~> 1.0)
+    regexp_parser (1.7.1)
+    rerun (0.13.0)
+      listen (~> 3.0)
+    rexml (3.2.4)
+    rspec (3.9.0)
+      rspec-core (~> 3.9.0)
+      rspec-expectations (~> 3.9.0)
+      rspec-mocks (~> 3.9.0)
+    rspec-core (3.9.2)
+      rspec-support (~> 3.9.3)
+    rspec-expectations (3.9.2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.9.0)
+    rspec-mocks (3.9.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.9.0)
+    rspec-support (3.9.3)
+    rubocop (0.90.0)
+      parallel (~> 1.10)
+      parser (>= 2.7.1.1)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.7)
+      rexml
+      rubocop-ast (>= 0.3.0, < 1.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 2.0)
+    ruby-progressbar (1.10.1)
+    ruby2_keywords (0.0.2)
+    ruby_dep (1.5.0)
+    sinatra (2.1.0)
+      mustermann (~> 1.0)
+      rack (~> 2.2)
+      rack-protection (= 2.1.0)
+      tilt (~> 2.0)
+    sinatra-contrib (2.1.0)
+      multi_json
+      mustermann (~> 1.0)
+      rack-protection (= 2.1.0)
+      sinatra (= 2.1.0)
+      tilt (~> 2.0)
+    slim (4.1.0)
+      temple (>= 0.7.6, < 0.9)
+      tilt (>= 2.0.6, < 2.1)
+    strscan (1.0.3)
+    temple (0.8.2)
+    tilt (2.0.10)
+    unicode-display_width (1.7.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  np!
+  rake (~> 12.0)
+  rerun
+  rspec (~> 3.0)
+  rubocop
+  rubocop-ast!
+
+BUNDLED WITH
+   2.1.4
