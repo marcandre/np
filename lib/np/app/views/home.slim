@@ -1,0 +1,40 @@
+javascript:
+  class App {
+    constructor(form) {
+      this.form = form;
+      form.addEventListener('input', () => this.update());
+    }
+
+    update() {
+      fetch('/update', {
+        method: 'POST',
+        body: new FormData(this.form)
+      })
+        .then(response => response.json())
+        .then(data => this.show(data))
+    }
+
+    show(data) {
+      for(const id in data) {
+        document.getElementById(id).innerHTML = data[id];
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    new App(document.querySelector('form'));
+  })
+
+
+form
+  label
+    | Pattern
+    input name="pattern"
+
+  label
+    | Ruby Code
+    input name="ruby"
+
+#ruby_ast
+
+#pattern_code

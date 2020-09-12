@@ -1,8 +1,7 @@
 # frozen_string_literal: true
-
-require 'np/version'
+require 'rubocop/ast'
 
 module Np
-  class Error < StandardError; end
-  # Your code goes here...
+  require_relative 'np/version'
+  require_relative 'np/debugger'
 end
