@@ -1,0 +1,6 @@
+task :serve do
+  fork do
+    exec 'parcel watch assets/index.* --global app'
+  end
+  system 'rerun -d .. rackup'
+end
