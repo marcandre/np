@@ -1,1 +1,5 @@
 @import 'codemirror/lib/codemirror.css';
+
+.red {
+  font-color: red;
+}

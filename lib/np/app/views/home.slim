@@ -1,37 +1,16 @@
 javascript:
-  class App {
-    constructor(form) {
-      this.form = form;
-      form.addEventListener('input', () => this.update());
-    }
-
-    update() {
-      fetch('/update', {
-        method: 'POST',
-        body: new FormData(this.form)
-      })
-        .then(response => response.json())
-        .then(data => this.show(data))
-    }
-
-    show(data) {
-      for(const id in data) {
-        document.getElementById(id).innerHTML = data[id];
-      }
-    }
-  }
-
   document.addEventListener('DOMContentLoaded', () => {
-    new App(document.querySelector('form'));
+    app = new App(document.querySelector('form'));
   })
 
 
 form
   label
     | Pattern
-    input name="pattern"
+    textarea name="pattern" rows="5" cols="40"
+      | (send _receiver ${:foo :bar :baz} $...)
 
-  label
+  label.red
     | Ruby Code
     input name="ruby"
 
