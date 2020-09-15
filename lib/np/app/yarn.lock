@@ -2,7 +2,22 @@
 # yarn lockfile v1
 
 
+bootstrap@^4.5.2:
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.5.2.tgz#a85c4eda59155f0d71186b6e6ad9b875813779ab"
+  integrity sha512-vlGn0bcySYl/iV+BGA544JkkZP5LB3jsmkeKLFQakCOwCM3AOk7VkldBz4jrzSe+Z0Ezn99NVXa1o45cQY4R6A==
+
 codemirror@^5.57.0:
   version "5.57.0"
   resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.57.0.tgz#d26365b72f909f5d2dbb6b1209349ca1daeb2d50"
   integrity sha512-WGc6UL7Hqt+8a6ZAsj/f1ApQl3NPvHY/UQSzG6fB6l4BjExgVdhFaxd7mRTw1UCiYe/6q86zHP+kfvBQcZGvUg==
+
+jquery@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
+  integrity sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==
+
+popper.js@^1.16.1:
+  version "1.16.1"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.1.tgz#2a223cb3dc7b6213d740e40372be40de43e65b1b"
+  integrity sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ==
