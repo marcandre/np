@@ -30,6 +30,9 @@ class App {
   }
 
   addMarks(data) {
+    if (!data)
+      return
+
     const match = App.MATCH[data.matched]
     if (match && data.position)
       this.marks.push(
