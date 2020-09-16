@@ -10,6 +10,7 @@ class App {
       autoCloseBrackets: true,
     })
     this.npCodemirror.on('changes', () => this.update(this.npCodemirror)) // https://github.com/codemirror/CodeMirror/issues/6416
+    this.setupResize(this.npCodemirror)
 
     this.ruby = form.querySelector('textarea[name="ruby"]')
     this.rubyCodemirror = CodeMirror.fromTextArea(this.ruby, {
@@ -18,15 +19,9 @@ class App {
       autoCloseBrackets: true,
     })
     this.rubyCodemirror.on('changes', () => this.update(this.rubyCodemirror)) // https://github.com/codemirror/CodeMirror/issues/6416
+    this.setupResize(this.rubyCodemirror)
 
-    this.update(this.rubyCodemirror);
-  }
-
-  cmConfig() {
-    return {
-      value: "function myScript(){return 100;}\n",
-      mode:  "text"
-    }
+    this.update(this.rubyCodemirror)
   }
 
   update(mirror) {
@@ -40,10 +35,10 @@ class App {
   }
 
   process(data) {
-    this.clearMarks();
-    this.updateHTML(data.html);
-    this.addMarks(data.node_pattern_unist);
-    this.addMarks(data.comments_unist);
+    this.clearMarks()
+    this.updateHTML(data.html)
+    this.addMarks(data.node_pattern_unist)
+    this.addMarks(data.comments_unist)
   }
 
   addMarks(data) {
@@ -60,7 +55,7 @@ class App {
         )
       )
     for(const child of data.children || [])
-      this.addMarks(child);
+      this.addMarks(child)
   }
 
   unist_point(point) {
@@ -78,6 +73,27 @@ class App {
       document.getElementById(id).innerHTML = data[id]
     }
   }
+
+
+  // Resize code adapted from https://codepen.io/sakifargo/pen/KodNyR
+  resize(cm) {
+    cm.setSize(this.resizeFrame(cm).clientWidth + 2,   // Chrome needs +2, others don't mind...
+               this.resizeFrame(cm).clientHeight - 10) // And CM needs room for the resize handle...
+  }
+
+  resizeFrame(cm) {
+    return cm.getWrapperElement().parentNode
+  }
+
+  setupResize(cm) {
+    // This is the actual "business logic" of the whole thing! ;)
+    if (window.ResizeObserver) // Chrome 64+
+      new ResizeObserver(() => this.resize(cm)).observe(this.resizeFrame(cm))
+    else if (window.MutationObserver) // others
+      new MutationObserver(() => this.resize(cm)).observe(this.resizeFrame(cm), {attributes: true})
+    this.resize(cm)
+  }
+
 }
 
 App.CodeMirror = CodeMirror

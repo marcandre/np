@@ -13,8 +13,9 @@ form
       .card.pattern.shadow
         label.card-body for="pattern"
           h4.card-title Pattern
-          textarea name="pattern" rows="5" cols="40"
-            | (send _receiver ${:foo :bar :baz} $...)
+          .resize-frame
+            textarea name="pattern" rows="5" cols="40"
+              | (send _receiver ${:foo :bar :baz} $...)
     .col
       .card.ruby-ast.shadow
         .card-body
@@ -26,7 +27,8 @@ form
       .card.ruby-code.shadow
         label.card-body
           h4.card-title Ruby Code
-          textarea name="ruby" rows="3" cols="40"
+          .resize-frame
+            textarea name="ruby" rows="3" cols="40"
 
     .col
       .card.matches.shadow
