@@ -1,6 +1,7 @@
 module Np
   class Debugger
     NodePattern = ::RuboCop::AST::NodePattern
+    ALLOWED_FUNCTIONS = %i[respond_to? is_a? kind_of? instance_of? nil? eql?].to_set.freeze
 
     attr_accessor :pattern, :ruby, :ruby_ast, :node_pattern
 
@@ -13,9 +14,15 @@ module Np
     def ruby_ast
       @ruby_ast ||= begin
         buffer = ::Parser::Source::Buffer.new('(ruby)', source: ruby)
-        builder = ::RuboCop::AST::Builder.new
-        ::Parser::CurrentRuby.new(builder).parse(buffer)
+        ruby_parser.parse(buffer)
       end
+    end
+
+    def ruby_parser
+      builder = ::RuboCop::AST::Builder.new
+      parser = ::Parser::CurrentRuby.new(builder)
+      parser.diagnostics.all_errors_are_fatal = true
+      parser
     end
 
     def node_pattern
@@ -53,6 +60,7 @@ module Np
     end
 
     def test
+      check_function_calls!
       @test ||= colorizer.test(ruby)
     end
 
@@ -65,6 +73,18 @@ module Np
     end
 
     private
+
+    def check_function_calls!(allow_list = ALLOWED_FUNCTIONS)
+      forbidden = colorizer.node_pattern.ast
+        .each_node
+        .select { |n| n.type == :function_call }
+        .map(&:child)
+        .grep_v(allow_list)
+
+      unless forbidden.empty?
+        raise "Forbidden function call: #{forbidden.join(', ')}. Acceptable calls: #{allow_list.to_a.join(', ')}"
+      end
+    end
 
     def element_to_unist(elem)
       return node_to_unist(elem) if elem.is_a?(NodePattern::Node)

@@ -30,4 +30,12 @@ RSpec.describe Np::Debugger do
       ))
     end
   end
+
+  describe 'test' do
+    let(:pattern) { '(send _ #eval("puts :x"))' }
+
+    it 'forbids most function calls' do
+      expect { debugger.test }.to raise_error(/Forbidden function call: eval. Acceptable .* is_a?/)
+    end
+  end
 end
