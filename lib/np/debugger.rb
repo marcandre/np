@@ -32,10 +32,24 @@ module Np
     end
 
     # See https://github.com/syntax-tree/unist
-    def to_unist
+    def node_pattern_to_unist
       return {} unless node_pattern
 
       node_to_unist(colorizer.node_pattern.ast)
+    end
+
+    def comments_to_unist
+      comments = colorizer.compiler.comments.map do |comment|
+        {
+          type: :comment,
+          matched: :comment,
+          position: range_to_unist(comment.loc.expression)
+        }
+      end
+      {
+          type: :comment_list,
+          children: comments,
+      }
     end
 
     private
@@ -64,12 +78,14 @@ module Np
       {
         type: node.type,
         matched: test.matched?(node),
-        position: range_to_unist(node.loc.expression),
+        position: range_to_unist(node.loc&.expression),
         data_kind => data
       }
     end
 
     def range_to_unist(range)
+      return unless range
+
       {
         start: {
           line: range.line,

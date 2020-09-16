@@ -15,5 +15,9 @@ post '/update' do
   html = %i[ruby_ast pattern_code].to_h do |id|
     [id, slim(id, layout: false)]
   end
-  json({html: html, unist: @info.to_unist})
+  json({
+    html: html,
+    node_pattern_unist: @info.node_pattern_to_unist,
+    comments_unist: @info.comments_to_unist,
+  })
 end

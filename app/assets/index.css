@@ -17,3 +17,7 @@
 [data-match=not-visitable] {
   color: gray;
 }
+
+[data-match=comment] {
+  color: lightslategray;
+}
