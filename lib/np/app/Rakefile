@@ -1,6 +1,6 @@
 task :serve do
   fork do
-    exec 'parcel watch assets/index.* --global App --no-hmr'
+    exec 'parcel watch assets/index.* --global App --no-hmr --public-url /assets'
   end
   system "rerun -d .. --pattern '**/*.{rb,ru,slim}' rackup"
 end

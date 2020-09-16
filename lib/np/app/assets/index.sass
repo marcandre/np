@@ -1,0 +1,43 @@
+@import "codemirror/lib/codemirror.css"
+
+@import "bootstrap/dist/css/bootstrap.css"
+
+@import "@fortawesome/fontawesome-free/css/all.css"
+
+[data-match=not-matched]
+  color: red
+
+[data-match=matched]
+  color: green
+
+[data-match=not-visited]
+  color: orange
+
+[data-match=not-visitable]
+  color: gray
+
+[data-match=comment]
+  color: lightslategray
+
+h4
+  color: darkseagreen
+
+.resize-frame
+  overflow: hidden
+
+  /* CM will manage its own scrollbars.
+  resize: both
+  height: 10em
+
+  /* A fixed initial height is required in Chrome both for the resize handle to appear and to not fall into a shrinking loop due to the neg. offset in cm_resize()! :-o
+
+  /* Optional...
+  border: 1px solid lightgrey
+  width: 20em
+
+#matches .fas
+  font-size: 5em
+  &.not-matched
+    color: red
+  &.matched
+    color: green
