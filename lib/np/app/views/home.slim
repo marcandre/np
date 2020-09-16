@@ -8,24 +8,28 @@ javascript:
 h2.text-center NodePattern Debugger
 
 form
-  .row
+  .row.mb-3
     .col-8
-      label for="pattern"
-        | Pattern
-        textarea name="pattern" rows="5" cols="40"
-          | (send _receiver ${:foo :bar :baz} $...)
+      .card.pattern.shadow
+        label.card-body for="pattern"
+          h4.card-title Pattern
+          textarea name="pattern" rows="5" cols="40"
+            | (send _receiver ${:foo :bar :baz} $...)
     .col
-      label
-        | Ruby AST
-        #ruby_ast
+      .card.ruby-ast.shadow
+        .card-body
+          h4.card-title Ruby AST
+          #ruby_ast
 
   .row
     .col-8
-      label
-        | Ruby Code
-        textarea name="ruby" rows="3" cols="40"
+      .card.ruby-code.shadow
+        label.card-body
+          h4.card-title Ruby Code
+          textarea name="ruby" rows="3" cols="40"
 
     .col
-      label
-        | Matches
-        #pattern_code
+      .card.matches.shadow
+        .card-body
+          h4.card-title Matches
+          #pattern_code
