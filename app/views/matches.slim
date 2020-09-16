@@ -1,0 +1,9 @@
+- if !@info.matched?
+  i.fas.fa-times.not-matched
+- elsif @info.node_pattern.captures == 0
+  i.fas.fa-check.matched
+- else
+  - captures = @info.node_pattern.captures == 1 ? [@info.returned] : @info.returned
+  ol
+    - captures.each do |capture|
+      li=capture.inspect

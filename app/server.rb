@@ -12,7 +12,7 @@ end
 post '/update' do
   h = params.to_h.transform_keys!(&:to_sym)
   @info = Np::Debugger.new(**h)
-  html = %i[ruby_ast pattern_code].to_h do |id|
+  html = %i[ruby_ast matches].to_h do |id|
     [id, slim(id, layout: false)]
   end
   json({

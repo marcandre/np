@@ -52,6 +52,18 @@ module Np
       }
     end
 
+    def test
+      @test ||= colorizer.test(ruby)
+    end
+
+    def matched?
+      test.matched?(colorizer.node_pattern.ast).tap {|x| p 'mat', x}
+    end
+
+    def returned
+      test.returned
+    end
+
     private
 
     def element_to_unist(elem)
@@ -102,10 +114,6 @@ module Np
 
     def colorizer
       @colorizer ||= NodePattern::Compiler::Debug::Colorizer.new(pattern)
-    end
-
-    def test
-      @test ||= colorizer.test(ruby)
     end
   end
 end
