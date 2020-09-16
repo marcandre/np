@@ -1,26 +1,29 @@
 @import "codemirror/lib/codemirror.css"
 
-@import "bootstrap/dist/css/bootstrap.css"
 
 @import "@fortawesome/fontawesome-free/css/all.css"
 
+@import "../node_modules/bootswatch/dist/slate/variables"
+@import "../node_modules/bootstrap/scss/bootstrap"
+@import "../node_modules/bootswatch/dist/slate/_bootswatch"
+
+@import "../node_modules/codemirror/theme/ambiance"
+
 [data-match=not-matched]
-  color: red
+  color: #b14e4e
 
 [data-match=matched]
-  color: green
+  color: #509550
 
 [data-match=not-visited]
-  color: orange
+  color: #c2a063
 
 [data-match=not-visitable]
-  color: gray
+  color: #999
 
 [data-match=comment]
   color: lightslategray
-
-h4
-  color: darkseagreen
+  font-style: italic
 
 .resize-frame
   overflow: hidden
@@ -38,6 +41,6 @@ h4
 #matches .fas
   font-size: 5em
   &.not-matched
-    color: red
+    color: #b14e4e
   &.matched
-    color: green
+    color: #509550
