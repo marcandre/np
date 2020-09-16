@@ -8,9 +8,14 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.14.0",
     "bootstrap": "^4.5.2",
+    "bootswatch": "^4.5.2",
     "codemirror": "^5.57.0",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1"
+  },
+  "devDependencies": {
+    "sass": "^1.26.10"
   }
 }
