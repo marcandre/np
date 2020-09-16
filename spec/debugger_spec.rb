@@ -7,7 +7,7 @@ RSpec.describe Np::Debugger do
 
   describe 'to_unist' do
     it 'generates a big hash' do
-      expect(debugger.to_unist).to match(hash_including(
+      expect(debugger.node_pattern_to_unist).to match(hash_including(
         type: :sequence,
         matched: true,
         position: {
