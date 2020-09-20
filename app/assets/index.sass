@@ -9,39 +9,6 @@
 
 @import "../node_modules/codemirror/theme/ambiance"
 
-[data-match=not-matched]
-  color: #b14e4e
+@import "sticky_footer"
 
-[data-match=matched]
-  color: #509550
-
-[data-match=not-visited]
-  color: #c2a063
-
-[data-match=not-visitable]
-  color: #999
-
-[data-match=comment]
-  color: lightslategray
-  font-style: italic
-
-.resize-frame
-  overflow: hidden
-
-  /* CM will manage its own scrollbars.
-  resize: both
-  height: 10em
-
-  /* A fixed initial height is required in Chrome both for the resize handle to appear and to not fall into a shrinking loop due to the neg. offset in cm_resize()! :-o
-
-  /* Optional...
-  border: 1px solid lightgrey
-
-#matches .fas
-  font-size: 5em
-  &.not-matched
-    color: #b14e4e
-  &.matched
-    color: #509550
-  &.error
-    color: #c2a063
+@import "app"

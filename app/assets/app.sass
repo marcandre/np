@@ -1,0 +1,39 @@
+[data-match=not-matched]
+  color: #b14e4e
+
+[data-match=matched]
+  color: #509550
+
+[data-match=not-visited]
+  color: #c2a063
+
+[data-match=not-visitable]
+  color: #999
+
+[data-match=comment]
+  color: lightslategray
+  font-style: italic
+
+.resize-frame
+  overflow: hidden
+
+  resize: both
+  height: 10em
+
+  border: 1px solid lightgrey
+
+#matches
+  .fas
+    font-size: 5em
+    &.not-matched
+      color: #b14e4e
+    &.matched
+      color: #509550
+    &.error
+      color: #c2a063
+  li
+    color: #509550
+    ::marker
+      color: #7a8288
+    &::marker
+      color: #7a8288

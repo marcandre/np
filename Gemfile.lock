@@ -1,12 +1,3 @@
-GIT
-  remote: https://github.com/marcandre/rubocop-ast.git
-  revision: f05a06082e60d576e37fe17874ab0b9e58273f29
-  branch: node_pattern_release
-  specs:
-    rubocop-ast (0.4.0)
-      parser (>= 2.7.1.4)
-      strscan (>= 1.0.0)
-
 PATH
   remote: .
   specs:
@@ -15,6 +6,13 @@ PATH
       sinatra
       sinatra-contrib
       slim
+
+PATH
+  remote: /Users/work/rubocop-ast
+  specs:
+    rubocop-ast (0.4.0)
+      parser (>= 2.7.1.4)
+      strscan (>= 1.0.0)
 
 GEM
   remote: https://rubygems.org/
