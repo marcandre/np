@@ -27,6 +27,7 @@ class App {
     this.updateHTML(data.html)
     this.addMarks(data.node_pattern_unist)
     this.addMarks(data.comments_unist)
+    this.setRubyHighlight(data)
   }
 
   addMarks(data) {
@@ -37,8 +38,8 @@ class App {
     if (match && data.position)
       this.marks.push(
         this.npCodemirror.markText(
-          this.unist_point(data.position.start),
-          this.unist_point(data.position.end),
+          this.unistToPoint(data.position.start),
+          this.unistToPoint(data.position.end),
           {
             className: 'dummy', // https://github.com/codemirror/CodeMirror/issues/6414
             attributes: {'data-match': match}
@@ -49,8 +50,26 @@ class App {
       this.addMarks(child)
   }
 
-  unist_point(point) {
+  unistToPoint(point) {
     return {line: point.line - 1, ch: point.column - 1}
+  }
+
+  setRubyHighlight(data) {
+    const className = App.MATCH[data.node_pattern_unist.matched]
+    this.highlightRuby(data.best_match, className)
+
+    for(const other of data.also_matched)
+      this.highlightRuby(other, 'also-matched')
+  }
+
+  highlightRuby(range, className) {
+    this.marks.push(
+      this.rubyCodemirror.markText(
+        this.unistToPoint(range.start),
+        this.unistToPoint(range.end),
+        { className }
+      )
+    )
   }
 
   clearMarks() {

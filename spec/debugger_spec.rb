@@ -21,13 +21,45 @@ RSpec.describe Np::Debugger do
             type: :union,
             matched: true,
             children: [
-              hash_including(matched: false),
+              hash_including(matched: false, tested: ':bar'),
               hash_including(matched: true),
-              hash_including(matched: nil),
+              hash_including(matched: nil, tested: nil),
             ]
           )
         ]
       ))
+    end
+
+    context 'when the ruby code to match is partial' do
+      let(:ruby) { 'def foo(a, b, c); a.bar; b.bar; c.bar; end' }
+
+      it 'selects the first match' do
+        expect(debugger.node_pattern_to_unist).to match(hash_including(
+          type: :sequence,
+          matched: true,
+          children: [
+            anything,
+            hash_including(tested: 's(:lvar, :a)'),
+            anything,
+          ]
+        ))
+      end
+    end
+
+    context 'when the ruby code to match is partially matched' do
+      let(:ruby) { 'def foo(a, b, c); a&.barx; b.barx; c.bar(42); end' }
+
+      it 'selects the first match' do
+        expect(debugger.node_pattern_to_unist).to match(hash_including(
+          type: :sequence,
+          matched: false,
+          children: [
+            anything,
+            hash_including(tested: 's(:lvar, :b)'),
+            anything,
+          ]
+        ))
+      end
     end
   end
 

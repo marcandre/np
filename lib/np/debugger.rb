@@ -1,6 +1,5 @@
 module Np
   class Debugger
-    NodePattern = ::RuboCop::AST::NodePattern
     ALLOWED_FUNCTIONS = %i[respond_to? is_a? kind_of? instance_of? nil? eql?].to_set.freeze
 
     attr_accessor :pattern, :ruby, :ruby_ast, :node_pattern
@@ -65,11 +64,21 @@ module Np
     end
 
     def matched?
-      test.matched?(colorizer.node_pattern.ast).tap {|x| p 'mat', x}
+      test.matched?(colorizer.node_pattern.ast)
     end
 
     def returned
       test.returned
+    end
+
+    def best_match_to_unist
+      range_to_unist(test.ruby_ast.loc&.expression)
+    end
+
+    def also_matched
+      test.other_matches.map do |node|
+        range_to_unist(node.loc&.expression)
+      end
     end
 
     private
@@ -110,9 +119,17 @@ module Np
       {
         type: node.type,
         matched: test.matched?(node),
+        tested: last_test(node),
         position: range_to_unist(node.loc&.expression),
         data_kind => data
       }
+    end
+
+    def last_test(node)
+      return unless colorizer.compiler.compiled_as_node_pattern.include?(node)
+
+      last_test = test.last_test(node) { return }
+      last_test.inspect
     end
 
     def range_to_unist(range)
@@ -133,7 +150,7 @@ module Np
     end
 
     def colorizer
-      @colorizer ||= NodePattern::Compiler::Debug::Colorizer.new(pattern)
+      @colorizer ||= Compiler::Colorizer.new(pattern)
     end
   end
 end

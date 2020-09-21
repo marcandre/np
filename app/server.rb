@@ -20,6 +20,8 @@ post '/update' do
       html: html,
       node_pattern_unist: @info.node_pattern_to_unist,
       comments_unist: @info.comments_to_unist,
+      best_match: @info.best_match_to_unist,
+      also_matched: @info.also_matched,
     })
   rescue Exception => e
     @error = e
