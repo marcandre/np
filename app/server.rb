@@ -1,9 +1,16 @@
+# frozen_string_literal: true
+
 require 'sinatra'
 require 'sinatra/json'
 require 'slim'
 require 'rubocop-ast'
 require 'parser/current'
+require 'yaml'
 require_relative '../lib/np'
+
+DOCS = YAML.load_file("#{__dir__}/docs.yaml").freeze
+
+DOCS_URL = 'https://docs.rubocop.org/rubocop-ast/node_pattern.html'
 
 get '/' do
   slim :home

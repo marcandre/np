@@ -11,5 +11,5 @@ task :serve do
   fork do
     exec 'cd app && parcel watch assets/index.* --global App --no-hmr --public-url /assets'
   end
-  system "rerun --pattern '**/*.{rb,ru,slim}' rackup"
+  system "rerun --pattern '**/*.{rb,ru,slim,yaml}' rackup"
 end

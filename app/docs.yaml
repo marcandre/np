@@ -1,0 +1,60 @@
+---
+- - "(type child ...)"
+  - |
+    matches the type and the children of a node
+    with the given patterns
+  - and-navigate-deeply-with-parens
+- - "_"
+  - "wildcard, matches anything"
+  - _-for-any-single-node
+- - "_named"
+  - "first is a wildcard, others must match"
+  - missing
+- - "..."
+  - "matches any number of children"
+  - "for-several-subsequent-nodes"
+- - "int"
+  - "calls `int_type?` on the element"
+  - missing
+- - "pat* pat+ pat ?"
+  - matches a variable number of children
+  - "for-repetitions"
+- - "<pat pat2>"
+  - matches the patterns in any order
+  - for-match-in-any-order
+- - "{pat pat2 | pat3}"
+  - matches either `pat pat2` or `pat 3`
+  - for-or
+- - "{pat pat2}"
+  - shortcut for "{pat | pat2}"
+  - for-or
+- - "[pat pat2]"
+  - matches all patterns
+  - for-and
+- - "$pat"
+  - captures the match
+  - for-captures
+- - "^pat"
+  - matches the pattern against the parent
+  - for-parent
+- - "`pat"
+  - matches the pattern against the descendants
+  - for-descendants
+- - "predicate?(...)"
+  - calls `predicate?` on the element to match
+  - predicate-methods
+- - "#method(...)"
+  - calls `method` with element as first argument
+  - to-call-functions
+- - "%1"
+  - matches sequential argument with `=== element`
+  - for-arguments
+- - "%named_param"
+  - matches named argument with `=== element`
+  - param_name-for-named-parameters
+- - "%CONST"
+  - matches the constant with `=== element`
+  - const-for-constants
+- - "# comment"
+  - comment
+  - comments

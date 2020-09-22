@@ -3,15 +3,13 @@ javascript:
     app = new App(document.querySelector('form'));
   })
 
-
-
-h2.text-center NodePattern Debugger
+h2 NodePattern Debugger
 
 form
   .row.mb-3
-    .col-8
+    .col-16
       .card.pattern.shadow
-        label.card-body for="pattern"
+        label.card-body.pb-1 for="pattern"
           h4.card-title Pattern
           .resize-frame
             textarea name="pattern" rows="5" cols="40"
@@ -19,16 +17,21 @@ form
                  ${:foo :puts :bar} # with one of these method calls
                  $...               # and any arguments
                 )
+          ul.legend.list-group.list-group-horizontal
+            li.list-group-item.not-matched not matched
+            li.list-group-item.matched matched
+            li.list-group-item.not-visited not tested
+            li.list-group-item.not-visitable argument
     .col
-      .card.ruby-ast.shadow
+      .card.matches.shadow
         .card-body
-          h4.card-title Ruby AST
-          #ruby_ast
+          h4.card-title Matches
+          #matches
 
   .row
-    .col-8
-      .card.ruby-code.shadow
-        label.card-body
+    .col-16
+      .card.ruby-code.shadow.pb-1
+        label.card-body.pb-1
           h4.card-title Ruby Code
           .resize-frame
             textarea name="ruby" rows="3" cols="40"
@@ -36,8 +39,29 @@ form
                   puts :hello
                   puts 'world'
                 end
+          ul.legend.list-group.list-group-horizontal
+            li.list-group-item.matched match
+            li.list-group-item.also-matched additional matches
+            li.list-group-item.not-matched closest non-match
+
     .col
-      .card.matches.shadow
+      .card.ruby-ast.shadow
         .card-body
-          h4.card-title Matches
-          #matches
+          h4.card-title Ruby AST
+          #ruby_ast
+
+
+.quick-reference.py-3.small
+  h4
+    | Quick
+    a.ml-1 href="https://docs.rubocop.org/rubocop-ast/node_pattern.html" reference
+  - columns = DOCS.each_slice((DOCS.size + 1) / 2).to_a
+  - columns.shift.zip(*columns) do |docs|
+    .row
+      - docs.each do |example, summary, fragment|
+        .col.example.col-3
+          a href="#{DOCS_URL}##{fragment}"
+            = example
+        .col.summary
+          = summary
+

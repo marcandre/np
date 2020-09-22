@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Np
   class Compiler < NodePattern::Compiler::Debug
     class Trace < Trace

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Np
   class Debugger
     ALLOWED_FUNCTIONS = %i[respond_to? is_a? kind_of? instance_of? nil? eql?].to_set.freeze

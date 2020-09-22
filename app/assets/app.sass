@@ -1,32 +1,34 @@
-[data-match=not-matched]
-  color: #b14e4e
+.pattern
+  .not-matched, [data-match=not-matched]
+    color: #b14e4e
 
-[data-match=matched]
-  color: #509550
+  .matched, [data-match=matched]
+    color: #509550
 
-[data-match=not-visited]
-  color: #c2a063
+  .not-visited, [data-match=not-visited]
+    color: #c2a063
 
-[data-match=not-visitable]
-  color: #999
+  .not-visitable, [data-match=not-visitable]
+    color: #999
 
-[data-match=comment]
-  color: lightslategray
-  font-style: italic
+  .comment, [data-match=comment]
+    color: lightslategray
+    font-style: italic
 
 .ruby-code
   .not-matched
     background-color: #461d1d
-    padding: 2px 0
-    margin: -2px 0
 
   .matched
     background-color: #013e01
-    padding: 2px 0
-    margin: -2px 0
 
   .also-matched
     background-color: #434639
+
+  .CodeMirror-line
+    .matched, .not-matched
+      padding: 2px 0
+      margin: -2px 0
 
 .resize-frame
   overflow: hidden
@@ -51,3 +53,14 @@
       color: #7a8288
     &::marker
       color: #7a8288
+
+.legend
+  .list-group-item
+    padding: 0.15em 0.5em
+    border-color: #7a8288 !important
+  &::before
+    content: "colors:"
+    padding: 0.15em 0.5em 0 0
+    color: #7a8288
+  margin-top: 0.5em
+
