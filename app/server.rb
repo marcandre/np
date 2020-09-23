@@ -34,6 +34,7 @@ post '/update' do
     @error = e
     json({
       html: {matches: slim(:error, layout: false)},
+      exception: {message: e.message, trace: e.backtrace},
     })
   end
 end
