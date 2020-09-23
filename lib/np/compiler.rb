@@ -82,7 +82,7 @@ module Np
 
     attr_reader :compiled_as_node_pattern
 
-    def initialize(*, **)
+    def initialize
       @compiled_as_node_pattern = Set[]
       super
     end
