@@ -8,6 +8,7 @@ gemspec
 gem 'webrick'
 gem 'rake', '~> 12.0'
 gem 'rspec', '~> 3.0'
+gem 'listen', git: 'https://github.com/guard/listen.git'
 
 gem 'rubocop'
 local_ast = File.expand_path('../rubocop-ast', __dir__)
