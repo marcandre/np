@@ -34,3 +34,39 @@ task :build_assets do
   end
   puts "Release ready with `git push heroku release:master -f`"
 end
+
+def repos
+  File.read('./repos.txt').split.map(&:freeze)
+end
+
+def ractor_process
+  repo_ractor = Ractor.new do
+    repos.each do |repo|
+      Ractor.yield repo
+    end
+  end
+
+  Ractor.select(*10.times.map do
+    Ractor.new(repo_ractor) do |repo_ractor|
+      begin
+        loop { process_repo(repo_ractor.take) }
+      rescue Exception => e
+        p e
+      end
+    end
+  end)
+end
+
+def process_repo(repo)
+  user, project = repo.split('/').last(2)
+  dir = "#{project}__#{user}".gsub(/\W/, '_')
+  `git clone --depth 1 #{repo} ./vault/#{dir}`
+end
+
+
+namespace :vault do
+  desc 'Import top repos'
+  task :import do
+    ractor_process
+  end
+end
