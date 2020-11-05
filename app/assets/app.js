@@ -4,7 +4,7 @@ class App {
   constructor(form) {
     this.form = form
     this.pattern = form.querySelector('textarea[name="pattern"]')
-    this.npCodemirror = this.initCodeMirror(this.pattern, 'text/text');
+    this.npCodemirror = this.initCodeMirror(this.pattern, 'text/text')
 
     this.ruby = form.querySelector('textarea[name="ruby"]')
     this.rubyCodemirror = this.initCodeMirror(this.ruby, 'text/x-ruby')
