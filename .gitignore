@@ -16,3 +16,6 @@
 # parcel
 /app/.cache
 /app/dist
+
+# search
+/vault
