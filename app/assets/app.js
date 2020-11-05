@@ -12,6 +12,15 @@ class App {
     this.update(this.rubyCodemirror)
   }
 
+  makePermalink() {
+    let p = encodeURIComponent(this.pattern.value)
+    let ruby = encodeURIComponent(this.ruby.value)
+    history.pushState(null, '', `?p=${p}&ruby=${ruby}`)
+    let prompt = document.querySelector('.prompt.make-permalink')
+    prompt.classList.remove('invisible')
+    setTimeout(() => { prompt.classList.add('invisible') }, 750)
+  }
+
   update(mirror) {
     mirror.save() // Update textarea
     fetch('/update', {

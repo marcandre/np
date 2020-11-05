@@ -14,10 +14,7 @@ form
           h4.card-title Pattern
           .resize-frame
             textarea name="pattern" rows="5" cols="40"
-              | (send _receiver     # send nodes, to any receiver
-                 ${:foo :puts :bar} # with one of these method calls
-                 $...               # and any arguments
-                )
+              = @pattern
           ul.legend.list-group.list-group-horizontal
             li.list-group-item.not-matched not matched
             li.list-group-item.matched matched
@@ -29,6 +26,12 @@ form
           h4.card-title Matches
           #matches
 
+      .actions.mt-3 align="right"
+        .prompt.make-permalink.invisible style="float: left"
+          | Current location set!
+        button.btn.btn-outline-secondary.btn-sm type="button" onclick="app.makePermalink()"
+          | Make Permalink
+
   .row
     .col-16
       .card.ruby-code.shadow.pb-1
@@ -36,10 +39,7 @@ form
           h4.card-title Ruby Code
           .resize-frame
             textarea name="ruby" rows="3" cols="40"
-              | def example
-                  puts :hello
-                  puts 'world'
-                end
+              = @ruby
           ul.legend.list-group.list-group-horizontal
             li.list-group-item.matched match
             li.list-group-item.also-matched additional matches

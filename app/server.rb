@@ -12,7 +12,21 @@ DOCS = YAML.load_file("#{__dir__}/docs.yaml").freeze
 
 DOCS_URL = 'https://docs.rubocop.org/rubocop-ast/node_pattern.html'
 
+
 get '/' do
+  @pattern = params[:p] || <<~PATTERN
+    (send _receiver     # send nodes, to any receiver
+     ${:foo :puts :bar} # with one of these method calls
+     $...               # and any arguments
+    )
+  PATTERN
+
+  @ruby = params[:ruby] || <<~RUBY
+    def example
+      puts :hello
+      puts 'world'
+    end
+  RUBY
   slim :home
 end
 
