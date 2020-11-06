@@ -1,28 +1,13 @@
 # Np
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/np`. To experiment with that code, run `bin/console` for an interactive prompt.
+Source for [node pattern debugger](https://nodepattern.herokuapp.com)
 
-TODO: Delete this and the text above, and describe your gem
+## Todo
 
-## Installation
+In the pipeline:
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'np'
-```
-
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install np
-
-## Usage
-
-TODO: Write usage instructions here
+- search for popular gems
+- local install & search
 
 ## Development
 
