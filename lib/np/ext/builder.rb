@@ -6,7 +6,7 @@ module Np
         false
       end
 
-      ::RuboCop::AST::NodePattern::Builder.prepend self
+      ::RuboCop::AST::NodePattern::Node.prepend self
     end
   end
 end
