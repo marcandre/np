@@ -12,6 +12,14 @@ DOCS = YAML.load_file("#{__dir__}/docs.yaml").freeze
 
 DOCS_URL = 'https://docs.rubocop.org/rubocop-ast/node_pattern.html'
 
+module App
+  refine Sinatra::Base do
+    def params
+      @params ||= super.to_h.transform_keys!(&:to_sym)
+    end
+  end
+end
+using App
 
 get '/' do
   @pattern = params[:p] || <<~PATTERN
@@ -31,8 +39,7 @@ get '/' do
 end
 
 post '/update' do
-  h = params.to_h.transform_keys!(&:to_sym)
-  @info = Np::Debugger.new(**h)
+  @info = Np::Debugger.new(**params)
   begin
     html = %i[ruby_ast matches].to_h do |id|
       [id, slim(id, layout: false)]
