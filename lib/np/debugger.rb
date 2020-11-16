@@ -15,15 +15,8 @@ module Np
     def ruby_ast
       @ruby_ast ||= begin
         buffer = ::Parser::Source::Buffer.new('(ruby)', source: ruby)
-        ruby_parser.parse(buffer)
+        Np.ruby_parser.parse(buffer)
       end
-    end
-
-    def ruby_parser
-      builder = ::RuboCop::AST::Builder.new
-      parser = ::Parser::CurrentRuby.new(builder)
-      parser.diagnostics.all_errors_are_fatal = true
-      parser
     end
 
     def node_pattern
