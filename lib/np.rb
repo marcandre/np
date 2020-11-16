@@ -2,6 +2,7 @@
 
 require 'rubocop/ast'
 require 'require_relative_dir'
+require 'parser/current'
 using RequireRelativeDir
 
 module Np

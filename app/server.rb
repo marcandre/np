@@ -3,8 +3,6 @@
 require 'sinatra'
 require 'sinatra/json'
 require 'slim'
-require 'rubocop-ast'
-require 'parser/current'
 require 'yaml'
 require_relative '../lib/np'
 
@@ -20,6 +18,8 @@ module App
   end
 end
 using App
+
+Faye::WebSocket.load_adapter('thin')
 
 get '/' do
   @pattern = params[:p] || <<~PATTERN
@@ -57,5 +57,32 @@ post '/update' do
       html: { matches: slim(:error, layout: false) },
       exception: { message: e.message, trace: e.backtrace },
     })
+  end
+end
+
+def library
+  @library ||= Library.new("#{__dir__}/../vault")
+end
+
+post '/search' do
+  if Faye::WebSocket.websocket?(request.env)
+    ws = Faye::WebSocket.new(request.env)
+
+    node_matcher = NodePattern.new(ws[:pattern]).as_lambda
+
+    search = Thread.new do
+      library.search(node_matcher) do |result|
+        @result = result
+        ws.send(slim(:result))
+      end
+    end
+
+    ws.on(:close) do
+      search.kill
+    end
+
+    ws.rack_response
+  else
+    raise NotImplementedError
   end
 end
