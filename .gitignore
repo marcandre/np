@@ -21,3 +21,4 @@
 /vault
 
 Gemfile.lock
+.rubocop-https*

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Np
   module Ext
     # Patch Builder to never optimize to sets. FIXME

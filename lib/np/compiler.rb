@@ -18,6 +18,7 @@ module Np
       def last_test(node_id)
         r = @last_test.fetch(node_id, NONE)
         return yield if r == NONE
+
         r
       end
     end
@@ -28,10 +29,10 @@ module Np
 
         # @return [Hash] a map for {node => tested object}
         def last_test_map
-          @test_map ||=
+          @last_test_map ||=
             ast
-            .each_node
-            .to_h { |node| [node, tested(node)] }
+              .each_node
+              .to_h { |node| [node, tested(node)] }
         end
 
         # @return a value of `Trace#last_test`
@@ -54,20 +55,28 @@ module Np
 
       def test(ruby)
         ruby = ruby_ast(ruby) if ruby.is_a?(String)
-        matches = []
+        best, exact_matches = rank(results(ruby))
+        best.other_matches = exact_matches - [best.ruby_ast]
+        best
+      end
+
+      private def results(ruby)
         ruby.each_node.map do |ast|
           trace = Trace.new
           returned = @node_pattern.as_lambda.call(ast, trace: trace)
           Result.new(self, trace, returned, ast)
         end
-        .min_by.with_index do |result, i|
+      end
+
+      # returns [best, exact_matches]
+      private def rank(results)
+        exact_matches = []
+        best = results.min_by.with_index do |result, i|
           count = result.unmatched_count
-          matches << result.ruby_ast if count == 0
+          exact_matches << result.ruby_ast if count == 0
           [result.unmatched_count, i] # stable sort
         end
-        .tap do |best|
-          best.other_matches = matches - [best.ruby_ast]
-        end
+        [best, exact_matches]
       end
     end
 

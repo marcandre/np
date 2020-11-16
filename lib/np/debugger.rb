@@ -4,7 +4,7 @@ module Np
   class Debugger
     ALLOWED_FUNCTIONS = %i[respond_to? is_a? kind_of? instance_of? nil? eql?].to_set.freeze
 
-    attr_accessor :pattern, :ruby, :ruby_ast, :node_pattern
+    attr_accessor :pattern, :ruby
 
     def initialize(pattern:, ruby:)
       @pattern = pattern
@@ -51,12 +51,12 @@ module Np
         {
           type: :comment,
           matched: :comment,
-          position: range_to_unist(comment.loc.expression)
+          position: range_to_unist(comment.loc.expression),
         }
       end
       {
-          type: :comment_list,
-          children: comments,
+        type: :comment_list,
+        children: comments,
       }
     end
 
@@ -83,21 +83,19 @@ module Np
       end
     end
 
-    private
-
-    def check_function_calls!(allow_list = ALLOWED_FUNCTIONS)
+    private def check_function_calls!(allow_list = ALLOWED_FUNCTIONS)
       forbidden = colorizer.node_pattern.ast
         .each_node
         .select { |n| n.type == :function_call }
         .map(&:child)
         .grep_v(allow_list)
 
-      unless forbidden.empty?
-        raise "Forbidden function call: #{forbidden.join(', ')}. Acceptable calls: #{allow_list.to_a.join(', ')}"
-      end
+      return if forbidden.empty?
+
+      raise "Forbidden function call: #{forbidden.join(', ')}. Acceptable calls: #{allow_list.to_a.join(', ')}"
     end
 
-    def element_to_unist(elem)
+    private def element_to_unist(elem)
       return node_to_unist(elem) if elem.is_a?(NodePattern::Node)
 
       {
@@ -109,32 +107,32 @@ module Np
     BASIC_CLASSES = Set[NilClass, FalseClass, TrueClass, Integer, Float, Symbol, String].freeze
     private_constant :BASIC_CLASSES
 
-    def node_to_unist(node)
-      if node.children.size == 1 && BASIC_CLASSES.include?(node.child.class)
-        data_kind = :value
-        data = node.child
-      else
-        data_kind = :children
-        data = node.children.map { |c| element_to_unist(c) }
-      end
-
+    private def node_to_unist(node)
       {
         type: node.type,
         matched: test.matched?(node),
         tested: last_test(node),
         position: range_to_unist(node.loc&.expression),
-        data_kind => data
+        **core_node_info(node),
       }
     end
 
-    def last_test(node)
+    private def core_node_info(node)
+      if node.children.size == 1 && BASIC_CLASSES.include?(node.child.class)
+        { value: node.child }
+      else
+        { children: node.children.map { |c| element_to_unist(c) } }
+      end
+    end
+
+    private def last_test(node)
       return unless colorizer.compiler.compiled_as_node_pattern.include?(node)
 
       last_test = test.last_test(node) { return }
       last_test.inspect
     end
 
-    def range_to_unist(range)
+    private def range_to_unist(range)
       return unless range
 
       {
@@ -151,7 +149,7 @@ module Np
       }
     end
 
-    def colorizer
+    private def colorizer
       @colorizer ||= Compiler::Colorizer.new(pattern)
     end
   end

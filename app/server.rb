@@ -51,11 +51,11 @@ post '/update' do
       best_match: @info.best_match_to_unist,
       also_matched: @info.also_matched,
     })
-  rescue Exception => e
+  rescue StandardError => e
     @error = e
     json({
-      html: {matches: slim(:error, layout: false)},
-      exception: {message: e.message, trace: e.backtrace},
+      html: { matches: slim(:error, layout: false) },
+      exception: { message: e.message, trace: e.backtrace },
     })
   end
 end
