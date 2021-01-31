@@ -4,7 +4,12 @@ require 'sinatra'
 require 'sinatra/json'
 require 'slim'
 require 'yaml'
+require 'faye/websocket'
+require 'rubocop/ast'
+
 require_relative '../lib/np'
+using RequireRelativeDir
+require_relative_dir 'helpers'
 
 DOCS = YAML.load_file("#{__dir__}/docs.yaml").freeze
 
@@ -18,6 +23,7 @@ module App
   end
 end
 using App
+
 
 Faye::WebSocket.load_adapter('thin')
 
@@ -61,24 +67,29 @@ post '/update' do
 end
 
 def library
-  @library ||= Library.new("#{__dir__}/../vault")
+  @library ||= Np::Library.new("#{__dir__}/../vault")
 end
 
-post '/search' do
+get '/search' do
   if Faye::WebSocket.websocket?(request.env)
     ws = Faye::WebSocket.new(request.env)
+    search_thread = nil
 
-    node_matcher = NodePattern.new(ws[:pattern]).as_lambda
+    ws.on(:message) do |event|
+      node_matcher = Np::NodePattern.new(event.data).as_lambda
+      search_thread&.kill
+      search_thread = Thread.new do
+        library.search(node_matcher) do |result|
+          @node = result
+          @expr = @node.loc.expression
 
-    search = Thread.new do
-      library.search(node_matcher) do |result|
-        @result = result
-        ws.send(slim(:result))
+          ws.send(slim(:result))
+        end
       end
     end
 
     ws.on(:close) do
-      search.kill
+      search_thread&.kill
     end
 
     ws.rack_response

@@ -1,0 +1,12 @@
+.result
+  .source
+    a href=(match_source_href)
+      = match_source
+  .content
+    - pre, m, post = match
+    span.before-match
+      = pre
+    span.match
+      = m
+    span.post-match
+      = post

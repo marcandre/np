@@ -4,7 +4,16 @@ javascript:
     app = new App(document.querySelector('form'))
   })
 
-h2 NodePattern Debugger
+ul.nav.nav-pills
+  .nav-item
+    h2.d-inline-block
+      | NodePattern
+  .nav-item
+    a.nav-link.active href="#" onclick="app.changeMode(this)" data-mode="debug"
+      | Debugger
+  .nav-item
+    a.nav-link href="#" onclick="app.changeMode(this)" data-mode="search"
+      | Search
 
 form
   .row.mb-3
@@ -23,16 +32,17 @@ form
     .col
       .card.matches.shadow
         .card-body
-          h4.card-title Matches
-          #matches
+          .debug-only
+            h4.card-title Matches
+            #matches
 
-      .actions.mt-3 align="right"
+      .actions.debug-only.mt-3 align="right"
         .prompt.make-permalink.invisible style="float: left"
           | Current location set!
         button.btn.btn-outline-secondary.btn-sm type="button" onclick="app.makePermalink()"
           | Make Permalink
 
-  .row
+  .row.debug-only
     .col-16
       .card.ruby-code.shadow.pb-1
         label.card-body.pb-1
@@ -51,8 +61,20 @@ form
           h4.card-title Ruby AST
           #ruby_ast
 
+  .row.search-only
+    .col-16
+      .card.search-results.shadow.pb-1
+        label.card-body.pb-1
+          h4.card-title Searches
+          #search_results
 
-.quick-reference.py-3.small
+    .col
+      .card.ruby-ast.shadow
+        .card-body
+          h4.card-title Progress
+          #search_progress
+
+.quick-reference.py-3.small.debug-only
   h4
     | Quick
     a.ml-1 href="https://docs.rubocop.org/rubocop-ast/node_pattern.html" reference

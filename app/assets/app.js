@@ -13,9 +13,9 @@ class Debugger {
     this.pattern = app.pattern
     this.ruby = new RubyEditor(app, 'text/x-ruby',
       app.form.querySelector('textarea[name="ruby"]'))
-
-    this.update()
   }
+
+  mode = 'debug'
 
   makePermalink() {
     let p = this.pattern.uriComponent()
@@ -50,12 +50,42 @@ class Debugger {
   }
 }
 
+class Search{
+  constructor(app) {
+    this.app = app
+    this.pattern = app.pattern
+    this.results = document.getElementById('search_results')
+    this.socket = null
+  }
+
+  mode = 'search'
+
+  update() {
+    if (this.socket)
+      this.socket.close()
+
+    this.socket = new WebSocket(`ws://${window.location.host}/search`)
+    this.socket.addEventListener('open', () => {
+      this.socket.send(this.pattern.input.value)
+    })
+    this.socket.addEventListener('message', (event) => process(event.data))
+  }
+
+  process(data) {
+    console.log('received', data)
+    this.results.insertAdjacentHTML('beforeend', data)
+  }
+}
+
 class App {
   constructor(form) {
     this.form = form
     this.pattern = new NodePatternEditor(this, 'text/text',
       form.querySelector('textarea[name="pattern"]'))
-    this.ui = new Debugger(this)
+    this.ui = this.debug = new Debugger(this)
+    this.search = new Search(this)
+
+    this.ui.update()
   }
 
   update(mirror) {
@@ -65,6 +95,20 @@ class App {
 
   tab(cur) {
     this.ui.tab(cur)
+  }
+
+  changeMode(elem) {
+    const classes = document.documentElement.classList
+    this.navClassList().remove('active')
+    classes.remove(`mode-${this.ui.mode}`)
+    this.ui = this[elem.getAttribute('data-mode')]
+    this.navClassList().add('active')
+    classes.add(`mode-${this.ui.mode}`)
+    this.ui.update()
+  }
+
+  navClassList() {
+    return document.querySelector(`.nav-link[data-mode="${this.ui.mode}"]`).classList
   }
 }
 
