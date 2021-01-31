@@ -2,6 +2,7 @@ import CodeMirror from 'codemirror/lib/codemirror'
 
 class CodeMirrorEditor {
   constructor(app, mode, input) {
+    this.marks = []
     this.app = app
     this.input = input
 
@@ -34,6 +35,25 @@ class CodeMirrorEditor {
 
   resizeFrame() {
     return this.cm.getWrapperElement().parentNode
+  }
+
+  mark(unistPos, data) {
+    this.marks.push(
+      this.cm.markText(
+        this.unistToPoint(unistPos.start),
+        this.unistToPoint(unistPos.end),
+        data
+      )
+    )
+  }
+
+  clearMarks() {
+    this.marks.forEach(mark => mark.clear())
+    this.marks = []
+  }
+
+  unistToPoint(point) {
+    return {line: point.line - 1, ch: point.column - 1}
   }
 }
 
@@ -69,7 +89,8 @@ class App {
   }
 
   process(data) {
-    this.clearMarks()
+    this.pattern.clearMarks()
+    this.ruby.clearMarks()
     this.updateHTML(data.html)
     this.addMarks(data.node_pattern_unist)
     this.addMarks(data.comments_unist)
@@ -81,47 +102,22 @@ class App {
       return
 
     const match = App.MATCH[data.matched]
+    const attr = {
+      className: 'dummy', // https://github.com/codemirror/CodeMirror/issues/6414
+      attributes: {'data-match': match}
+    }
     if (match && data.position)
-      this.marks.push(
-        this.pattern.cm.markText(
-          this.unistToPoint(data.position.start),
-          this.unistToPoint(data.position.end),
-          {
-            className: 'dummy', // https://github.com/codemirror/CodeMirror/issues/6414
-            attributes: {'data-match': match}
-          }
-        )
-      )
+      this.pattern.mark(data.position, attr)
     for(const child of data.children || [])
       this.addMarks(child)
   }
 
-  unistToPoint(point) {
-    return {line: point.line - 1, ch: point.column - 1}
-  }
-
   setRubyHighlight(data) {
     const className = App.MATCH[data.node_pattern_unist.matched]
-    this.highlightRuby(data.best_match, className)
+    this.ruby.mark(data.best_match, { className })
 
     for(const other of data.also_matched)
-      this.highlightRuby(other, 'also-matched')
-  }
-
-  highlightRuby(range, className) {
-    this.marks.push(
-      this.ruby.cm.markText(
-        this.unistToPoint(range.start),
-        this.unistToPoint(range.end),
-        { className }
-      )
-    )
-  }
-
-  clearMarks() {
-    if (this.marks)
-      this.marks.forEach(mark => mark.clear())
-    this.marks = []
+      this.ruby.mark(other, { className: 'also-matched' })
   }
 
   updateHTML(data) {
