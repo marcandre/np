@@ -15,7 +15,7 @@ DOCS_URL = 'https://docs.rubocop.org/rubocop-ast/node_pattern.html'
 module App
   refine Sinatra::Base do
     def params
-      @params ||= super.to_h.transform_keys!(&:to_sym)
+      @params_cache ||= super.to_h.transform_keys!(&:to_sym)
     end
   end
 end
