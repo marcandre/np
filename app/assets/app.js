@@ -55,6 +55,10 @@ class CodeMirrorEditor {
   unistToPoint(point) {
     return {line: point.line - 1, ch: point.column - 1}
   }
+
+  uriComponent() {
+    return encodeURIComponent(this.input.value)
+  }
 }
 
 class NodePatternEditor extends CodeMirrorEditor {
@@ -97,8 +101,8 @@ class App {
   }
 
   makePermalink() {
-    let p = encodeURIComponent(this.pattern.input.value)
-    let ruby = encodeURIComponent(this.ruby.input.value)
+    let p = this.pattern.uriComponent()
+    let ruby = this.ruby.uriComponent()
     history.pushState(null, '', `?p=${p}&ruby=${ruby}`)
     let prompt = document.querySelector('.prompt.make-permalink')
     prompt.classList.remove('invisible')
