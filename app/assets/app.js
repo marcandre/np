@@ -57,13 +57,40 @@ class CodeMirrorEditor {
   }
 }
 
+class NodePatternEditor extends CodeMirrorEditor {
+  addMarks(data) {
+    if (!data)
+      return
+
+    const match = App.MATCH[data.matched]
+    const attr = {
+      className: 'dummy', // https://github.com/codemirror/CodeMirror/issues/6414
+      attributes: {'data-match': match}
+    }
+    if (match && data.position)
+      this.mark(data.position, attr)
+    for(const child of data.children || [])
+      this.addMarks(child)
+  }
+}
+
+class RubyEditor extends CodeMirrorEditor {
+  addMarks(data) {
+    const className = App.MATCH[data.node_pattern_unist.matched]
+    this.mark(data.best_match, { className })
+
+    for(const other of data.also_matched)
+      this.mark(other, { className: 'also-matched' })
+  }
+}
+
 class App {
   constructor(form) {
     this.form = form
-    this.pattern = new CodeMirrorEditor(this, 'text/text',
+    this.pattern = new NodePatternEditor(this, 'text/text',
       form.querySelector('textarea[name="pattern"]'))
 
-    this.ruby = new CodeMirrorEditor(this, 'text/x-ruby',
+    this.ruby = new RubyEditor(this, 'text/x-ruby',
       form.querySelector('textarea[name="ruby"]'))
 
     this.update(this.ruby.cm)
@@ -92,32 +119,9 @@ class App {
     this.pattern.clearMarks()
     this.ruby.clearMarks()
     this.updateHTML(data.html)
-    this.addMarks(data.node_pattern_unist)
-    this.addMarks(data.comments_unist)
-    this.setRubyHighlight(data)
-  }
-
-  addMarks(data) {
-    if (!data)
-      return
-
-    const match = App.MATCH[data.matched]
-    const attr = {
-      className: 'dummy', // https://github.com/codemirror/CodeMirror/issues/6414
-      attributes: {'data-match': match}
-    }
-    if (match && data.position)
-      this.pattern.mark(data.position, attr)
-    for(const child of data.children || [])
-      this.addMarks(child)
-  }
-
-  setRubyHighlight(data) {
-    const className = App.MATCH[data.node_pattern_unist.matched]
-    this.ruby.mark(data.best_match, { className })
-
-    for(const other of data.also_matched)
-      this.ruby.mark(other, { className: 'also-matched' })
+    this.pattern.addMarks(data.node_pattern_unist)
+    this.pattern.addMarks(data.comments_unist)
+    this.ruby.addMarks(data)
   }
 
   updateHTML(data) {
