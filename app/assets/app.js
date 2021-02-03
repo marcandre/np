@@ -1,15 +1,20 @@
 import CodeMirror from 'codemirror/lib/codemirror'
 import { NodePatternEditor, RubyEditor } from './editors'
-class App {
-  constructor(form) {
-    this.form = form
-    this.pattern = new NodePatternEditor(this, 'text/text',
-      form.querySelector('textarea[name="pattern"]'))
 
-    this.ruby = new RubyEditor(this, 'text/x-ruby',
-      form.querySelector('textarea[name="ruby"]'))
+function updateHTML(data) {
+  for(const id in data) {
+    document.getElementById(id).innerHTML = data[id]
+  }
+}
 
-    this.update(this.ruby.cm)
+class Debugger {
+  constructor(app) {
+    this.app = app
+    this.pattern = app.pattern
+    this.ruby = new RubyEditor(app, 'text/x-ruby',
+      app.form.querySelector('textarea[name="ruby"]'))
+
+    this.update()
   }
 
   makePermalink() {
@@ -21,11 +26,10 @@ class App {
     setTimeout(() => { prompt.classList.add('invisible') }, 750)
   }
 
-  update(mirror) {
-    mirror.save() // Update textarea
+  update() {
     fetch('/update', {
       method: 'POST',
-      body: new FormData(this.form)
+      body: new FormData(this.app.form)
     })
       .then(response => response.json())
       .then(data => this.process(data))
@@ -34,21 +38,33 @@ class App {
   process(data) {
     this.pattern.clearMarks()
     this.ruby.clearMarks()
-    this.updateHTML(data.html)
+    updateHTML(data.html)
     this.pattern.addMarks(data.node_pattern_unist)
     this.pattern.addMarks(data.comments_unist)
     this.ruby.addMarks(data)
   }
 
-  updateHTML(data) {
-    for(const id in data) {
-      document.getElementById(id).innerHTML = data[id]
-    }
-  }
-
   tab(cur) {
     const other = cur == this.ruby ? this.pattern : this.ruby
     other.cm.focus()
+  }
+}
+
+class App {
+  constructor(form) {
+    this.form = form
+    this.pattern = new NodePatternEditor(this, 'text/text',
+      form.querySelector('textarea[name="pattern"]'))
+    this.ui = new Debugger(this)
+  }
+
+  update(mirror) {
+    mirror.save() // Update textarea
+    this.ui.update()
+  }
+
+  tab(cur) {
+    this.ui.tab(cur)
   }
 }
 
