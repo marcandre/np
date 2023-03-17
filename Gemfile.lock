@@ -20,9 +20,12 @@ GEM
     multi_json (1.15.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
+    nio4r (2.5.8)
     parallel (1.22.1)
     parser (3.2.1.1)
       ast (~> 2.4.1)
+    puma (6.1.1)
+      nio4r (~> 2.0)
     rack (2.2.6.4)
     rack-protection (3.0.5)
       rack
@@ -85,6 +88,7 @@ PLATFORMS
 
 DEPENDENCIES
   np!
+  puma
   rake (~> 12.0)
   rerun
   rspec (~> 3.0)
