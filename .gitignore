@@ -24,3 +24,5 @@ Gemfile.lock
 .rubocop-https*
 
 .ruby-version
+
+.parcel-cache
