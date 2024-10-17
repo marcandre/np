@@ -6,4 +6,7 @@ import 'bootstrap'
 
 import App from './app'
 
-module.exports = App
+document.addEventListener('DOMContentLoaded', () => {
+  const app = new App(document.querySelector('form'))
+  window.app = app;
+})
