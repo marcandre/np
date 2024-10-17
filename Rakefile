@@ -7,7 +7,7 @@ RSpec::Core::RakeTask.new(:spec)
 
 task default: :spec
 
-PARCEL_OPTIONS = 'assets/index.* --global App --public-url /assets'
+PARCEL_OPTIONS = 'assets/index.* --public-url /assets'
 
 desc 'Start local server'
 task :serve do

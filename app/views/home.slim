@@ -1,9 +1,3 @@
-javascript:
-  app = null
-  document.addEventListener('DOMContentLoaded', () => {
-    app = new App(document.querySelector('form'))
-  })
-
 h2 NodePattern Debugger
 
 form
@@ -29,7 +23,7 @@ form
       .actions.mt-3 align="right"
         .prompt.make-permalink.invisible style="float: left"
           | Current location set!
-        button.btn.btn-outline-secondary.btn-sm type="button" onclick="app.makePermalink()"
+        button.btn.btn-outline-secondary.btn-sm type="button" onclick="app.ui.makePermalink()"
           | Make Permalink
 
   .row
@@ -66,4 +60,3 @@ form
             = example
         .col.summary
           = summary
-

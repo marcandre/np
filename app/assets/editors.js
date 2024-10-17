@@ -1,3 +1,4 @@
+import App from './app'
 import CodeMirror from 'codemirror/lib/codemirror'
 
 class CodeMirrorEditor {
