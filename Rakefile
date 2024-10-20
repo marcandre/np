@@ -17,9 +17,10 @@ task :serve do
   system "rerun -d app,lib --pattern '**/*.{rb,ru,slim,yaml}' bundle exec rackup"
 end
 
-desc 'Build assets'
+desc '* Build assets, prepare for release *'
 task :build_assets do
   raise 'Must be clean' if `git status --porcelain` != ''
+
   [
     'git branch -D release &>/dev/null',
     'git switch -c release',
@@ -32,5 +33,5 @@ task :build_assets do
     puts cmd
     system cmd
   end
-  puts "Release ready with `git push heroku release:master -f`"
+  puts 'Release ready with `git push heroku release:master -f`'
 end
