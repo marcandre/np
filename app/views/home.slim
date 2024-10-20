@@ -3,7 +3,7 @@ h2 NodePattern Debugger
 form
   .row.mb-3
     .col-16
-      .card.pattern.shadow
+      .card.pattern.shadow.pb-1
         label.card-body.pb-1 for="pattern"
           h4.card-title Pattern
           .resize-frame
@@ -34,7 +34,7 @@ form
           .resize-frame
             textarea name="ruby" rows="3" cols="40"
               = @ruby
-          ul.legend.list-group.list-group-horizontal
+          ul.legend.list-group.list-group-horizontal.text-muted
             li.list-group-item.matched match
             li.list-group-item.also-matched additional matches
             li.list-group-item.not-matched closest non-match
@@ -50,7 +50,7 @@ form
 .quick-reference.py-3.small
   h4
     | Quick
-    a.ml-1 href="https://docs.rubocop.org/rubocop-ast/node_pattern.html" reference
+    a.ms-1 href="https://docs.rubocop.org/rubocop-ast/node_pattern.html" reference
   - columns = DOCS.each_slice((DOCS.size + 1) / 2).to_a
   - columns.shift.zip(*columns) do |docs|
     .row
