@@ -8,12 +8,10 @@
   "private": false,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
-    "bootstrap": "^4.5.2",
-    "bootswatch": "^4.5.2",
+    "bootstrap": "^5.3.3",
+    "bootswatch": "^5.3.3",
     "codemirror": "^5.57.0",
-    "jquery": "^3.5.1",
-    "parcel": "^2.9.3",
-    "popper.js": "^1.16.1"
+    "parcel": "^2.9.3"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
