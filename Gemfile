@@ -6,7 +6,7 @@ ruby '~> 3.4.2'
 gemspec
 
 gem 'rackup', '~> 2.0'
-gem 'rake', '~> 12.0'
+gem 'rake', '~> 13.0'
 gem 'rspec', '~> 3.0'
 
 gem 'puma'
