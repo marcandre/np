@@ -14,16 +14,15 @@ module Np
 
     def ruby_ast
       @ruby_ast ||= begin
-        buffer = ::Parser::Source::Buffer.new('(ruby)', source: ruby)
-        ruby_parser.parse(buffer)
-      end
-    end
+        processed_source = RuboCop::AST::ProcessedSource.new(ruby, RUBY_VERSION.to_f, '(ruby)')
+        if !processed_source.valid_syntax?
+          diagnostics = processed_source.diagnostics
+          error = diagnostics.find { |d| d.level == :error } || diagnostics.first
+          raise error.message
+        end
 
-    def ruby_parser
-      builder = ::RuboCop::AST::Builder.new
-      parser = ::Parser::CurrentRuby.new(builder)
-      parser.diagnostics.all_errors_are_fatal = true
-      parser
+        processed_source.ast
+      end
     end
 
     def node_pattern

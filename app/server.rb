@@ -4,7 +4,6 @@ require 'sinatra'
 require 'sinatra/json'
 require 'slim'
 require 'rubocop-ast'
-require 'parser/current'
 require 'yaml'
 require_relative '../lib/np'
 
